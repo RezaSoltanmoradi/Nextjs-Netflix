@@ -20,7 +20,7 @@ function Banner({ netFlixOrginals }: Props) {
     <div className="flex flex-col space-y-2 py-16 md:space-y-4 lg:h-[65vh] lg:justify-end lg:pb-12">
       <div className="absolute top-0 left-0 -z-10 h-[95vh] w-screen">
         <Image
-          src={`${baseURL}${movie?.backdrop_path}` || movie?.poster_path}
+          src={`${baseURL}${movie?.backdrop_path || movie?.poster_path} `}
           layout="fill"
           objectFit="cover"
         />
@@ -32,7 +32,7 @@ function Banner({ netFlixOrginals }: Props) {
         {movie?.overview}
       </p>
 
-      <div className='flex space-x-3'>
+      <div className="flex space-x-3">
         <button className="bannerButton bg-white text-black ">
           <FaPlay className="h-4 w-4 text-black md:w-7" /> Play
         </button>
