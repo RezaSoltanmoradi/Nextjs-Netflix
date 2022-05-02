@@ -9,13 +9,14 @@ interface Props {
 }
 function Banner({ netFlixOrginals }: Props) {
   const [movie, setMovie] = useState<Movie | null>(null)
-  console.log(movie)
   useEffect(() => {
     setMovie(
       netFlixOrginals[Math.floor(Math.random() * netFlixOrginals.length)]
     )
   }, [netFlixOrginals])
-  console.log('movie: ', movie)
+    if(movie){
+      console.log('poster: ', baseURL + movie?.backdrop_path || movie?.poster_path)
+    }
   return (
     <div className="flex flex-col space-y-2 py-16 md:space-y-4 lg:h-[65vh] lg:justify-end lg:pb-12">
       <div className="absolute top-0 left-0 -z-10 h-[95vh] w-screen">
