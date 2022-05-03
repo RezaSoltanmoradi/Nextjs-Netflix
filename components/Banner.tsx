@@ -4,6 +4,7 @@ import { baseURL } from '../constants/movie'
 import { Movie } from '../typings/typings'
 import { FaPlay } from 'react-icons/fa'
 import { HiInformationCircle } from 'react-icons/hi'
+import Link from 'next/link'
 interface Props {
   netFlixOrginals: Movie[]
 }
@@ -14,17 +15,24 @@ function Banner({ netFlixOrginals }: Props) {
       netFlixOrginals[Math.floor(Math.random() * netFlixOrginals.length)]
     )
   }, [netFlixOrginals])
-    if(movie){
-      console.log('poster: ', baseURL + movie?.backdrop_path || movie?.poster_path)
-    }
+  if (movie) {
+    console.log(
+      'poster: ',
+      baseURL + movie?.backdrop_path || movie?.poster_path
+    )
+    const imageSrc = baseURL + movie?.backdrop_path || movie?.poster_path
+    console.log(imageSrc)
+  }
   return (
     <div className="flex flex-col space-y-2 py-16 md:space-y-4 lg:h-[65vh] lg:justify-end lg:pb-12">
       <div className="absolute top-0 left-0 -z-10 h-[95vh] w-screen">
-        <Image
-          src={`${baseURL}${movie?.backdrop_path || movie?.poster_path} `}
-          layout="fill"
-          objectFit="cover"
-        />
+        {movie && (
+          <Image
+            layout="fill"
+            src={`${baseURL}${movie?.backdrop_path || movie?.poster_path}`}
+            objectFit="cover"
+          />
+        )}
       </div>
       <h1 className="text-2xl font-bold md:text-4xl lg:text-7xl">
         {movie?.title || movie?.name || movie?.original_name}
@@ -40,6 +48,7 @@ function Banner({ netFlixOrginals }: Props) {
         <button className="bannerButton bg-[gray]/70 text-black">
           <HiInformationCircle className="h-5 w-5 md:h-8 md:w-8 " /> More Info
         </button>
+        <Link href="/image">Image Detail</Link>
       </div>
     </div>
   )
