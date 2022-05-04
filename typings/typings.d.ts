@@ -18,7 +18,7 @@ export interface Movie {
   popularity: number
   poster_path: string
   vote_average: number
-  vote_count: number
+  vote_count: number  
 }
 
 export interface Element {

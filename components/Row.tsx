@@ -1,7 +1,8 @@
-import { Movie } from '../typings/typings'
 import { HiChevronLeft, HiChevronRight } from 'react-icons/hi'
-import Thumbnail from './Thumbnail'
+import { Movie } from '../typings/typings'
 import { useRef, useState } from 'react'
+import Thumbnail from './Thumbnail'
+
 interface Props {
   title: string
   // when using firebase
@@ -23,10 +24,10 @@ const Row = ({ title, movies }: Props) => {
           ? scrollLeft - clientWidth
           : scrollLeft + clientWidth
 
-      rowRef.current.scrollTo({ left: scrollTo, behavior: 'smooth' })
+      rowRef.current.scrollTo({ left: scrollTo,behavior: 'smooth' })
     }
   }
-  // console.log(rowRef.current!.scrollLeft, rowRef.current!.clientWidth) 
+  // console.log(rowRef.current!.scrollLeft, rowRef.current!.clientWidth)
   return (
     <div className=" h-40 space-y-0.5 md:space-y-2">
       <h2

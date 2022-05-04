@@ -4,6 +4,10 @@ import Banner from '../components/Banner'
 import Row from '../components/Row'
 import requests from '../utils/request'
 import { Movie } from '../typings/typings'
+import useAuth from '../hooks/useAuth'
+import { useRecoilValue } from 'recoil'
+import { modalState } from '../atoms/modalAtom'
+import Modal from '../components/Modal'
 
 interface Props {
   netflixOriginals: Movie[]
@@ -25,6 +29,10 @@ function Home({
   horrorMovies,
   romanceMovies,
 }: Props) {
+  const { loading } = useAuth()
+  const showModal = useRecoilValue(modalState)
+  if (loading) return null
+
   return (
     <div className="relative h-screen bg-gradient-to-b  lg:h-[140vh] ">
       <Head>
@@ -45,14 +53,12 @@ function Home({
           <Row title="Documentaries " movies={documentaries} />
           <Row title="Romance Movies " movies={romanceMovies} />
         </section>
-        
       </main>
-
       {/* Modal */}
+      {showModal && <Modal />}
     </div>
   )
 }
-
 export const getServerSideProps = async () => {
   const [
     netflixOriginals,
@@ -73,8 +79,6 @@ export const getServerSideProps = async () => {
     fetch(requests.fetchRomanceMovies).then((res) => res.json()),
     fetch(requests.fetchDocumentaries).then((res) => res.json()),
   ])
-  console.log('netFlixOrginals: ', netflixOriginals)
-  console.log('netFlixOrginalsResults: ', netflixOriginals.results)
   return {
     props: {
       netflixOriginals: netflixOriginals.results,
