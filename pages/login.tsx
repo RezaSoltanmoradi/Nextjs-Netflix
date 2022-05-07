@@ -3,6 +3,7 @@ import Image from 'next/image'
 import {  useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import useAuth from '../hooks/useAuth'
+
 interface formInputs {
   email: string
   password: string
@@ -15,7 +16,6 @@ const Login = () => {
   const {
     register,
     handleSubmit,
-    setValue,
     formState: { errors },
   } = useForm<formInputs>()
 
@@ -27,7 +27,7 @@ const Login = () => {
       signUp(email, password)
     }
   }
-
+ 
   return (
     <div
       className="relative flex h-screen w-screen flex-col bg-black md:items-center

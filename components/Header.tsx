@@ -29,13 +29,14 @@ const Header = () => {
           height={100}
           className="cursor-pointer object-contain"
         />
-
         <ul className="hidden space-x-4 md:flex">
           <li className="headerLink">Home</li>
           <li className="headerLink">TV Shows</li>
           <li className="headerLink">Movies</li>
           <li className="headerLink">New & popular</li>
-          <li className="headerLink">My List</li>
+          <li className="headerLink">
+            <Link href='/myList'>My List</Link>
+          </li>
         </ul>
       </div>
       <div className="flex items-center space-x-4 text-sm font-light">

@@ -2,6 +2,7 @@ import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import { AuthProvider } from '../hooks/useAuth'
 import { RecoilRoot } from 'recoil'
+import ProvideTableContext from '../context/TableContext'
 
 function MyApp({ Component, pageProps }: AppProps) {
   // HOC
@@ -9,7 +10,9 @@ function MyApp({ Component, pageProps }: AppProps) {
     <RecoilRoot>
       {/* Higher Order Component */}
       <AuthProvider>
-        <Component {...pageProps} />
+        <ProvideTableContext>
+          <Component {...pageProps} />
+        </ProvideTableContext>
       </AuthProvider>
     </RecoilRoot>
   )

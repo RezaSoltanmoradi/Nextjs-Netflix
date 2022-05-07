@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 import { Movie } from '../typings/typings'
 import { useRecoilState } from 'recoil'
 import { modalState, movieState } from './../atoms/modalAtom'

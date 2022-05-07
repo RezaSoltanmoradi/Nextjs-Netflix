@@ -8,6 +8,8 @@ import useAuth from '../hooks/useAuth'
 import { useRecoilValue } from 'recoil'
 import { modalState } from '../atoms/modalAtom'
 import Modal from '../components/Modal'
+import { useContext, useState } from 'react'
+import { TableContext } from '../context/TableContext'
 
 interface Props {
   netflixOriginals: Movie[]
@@ -31,7 +33,10 @@ function Home({
 }: Props) {
   const { loading } = useAuth()
   const showModal = useRecoilValue(modalState)
+  const { productList } = useContext(TableContext)
+  const [showList, setShowList]=useState(true)
   if (loading) return null
+
 
   return (
     <div className={`relative h-screen bg-gradient-to-b  lg:h-[140vh] 
@@ -40,19 +45,29 @@ function Home({
         <title>Home-Netflix</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      
       <Header />
       <main className="relative pl-4 pb-24 lg:space-y-24 lg:pl-16 ">
         <Banner netFlixOrginals={netflixOriginals} />
 
         <section className="md:space-y-24">
+          
+          {/* My List */}
           <Row title="Trending New " movies={trendingNow} />
           <Row title="Top Rated " movies={topRated} />
           <Row title="Action Thrillers " movies={actionMovies} />
-          {/* My List */}
           <Row title="Commedies " movies={comedyMovies} />
           <Row title="Scary Movies  " movies={horrorMovies} />
           <Row title="Documentaries " movies={documentaries} />
           <Row title="Romance Movies " movies={romanceMovies} />
+           {productList.length>0 &&(
+          <>
+            <button  className={`mx-auto w-11/12 rounded bg-[#E50914] py-3 transition text-xl shadow hover:bg-[#f6121d] md:w-[100px] ${
+              'opacity-60'
+            }`} onClick={()=> setShowList(!showList)}>favorite </button>
+          {showList && <Row title="favorite list " movies={productList.map(p=>p.product)} />}
+            </>
+           ) }
         </section>
       </main>
       {/* Modal */}

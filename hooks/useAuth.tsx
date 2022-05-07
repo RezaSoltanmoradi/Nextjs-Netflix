@@ -8,7 +8,6 @@ import {
 import { useRouter } from 'next/router'
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { auth } from '../firebase'
-
 interface IAuth {
   user: User | null
   signUp: (email: string, password: string) => Promise<void>
@@ -84,7 +83,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       .then(() => {
         setUser(null)
       })
-      .catch((error) => console.log(error.message))
+      .catch((error) => alert(error.message))
       .finally(() => setLoading(false))
   }
   //-------------------------------------------------

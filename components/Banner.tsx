@@ -6,6 +6,7 @@ import { FaPlay } from 'react-icons/fa'
 import { HiInformationCircle } from 'react-icons/hi'
 import { useRecoilState } from 'recoil'
 import { modalState, movieState } from '../atoms/modalAtom'
+
 interface Props {
   netFlixOrginals: Movie[]
 }
@@ -15,8 +16,9 @@ function Banner({ netFlixOrginals }: Props) {
   const [showModal, setShowModal] = useRecoilState(modalState)
   const [currentMovie, setCurrentMovie] = useRecoilState(movieState)
   useEffect(() => {
+    const randomMovie=Math.floor(Math.random()* netFlixOrginals.length)
     setMovie(
-      netFlixOrginals[Math.floor(Math.random() * netFlixOrginals.length)]
+      netFlixOrginals[randomMovie]
     )
   }, [netFlixOrginals])
 
@@ -56,4 +58,5 @@ function Banner({ netFlixOrginals }: Props) {
     </div>
   )
 }
+Banner.defaultProps = [{ something: '' }]
 export default Banner

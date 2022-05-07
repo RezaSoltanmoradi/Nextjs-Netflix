@@ -3,16 +3,19 @@ import { modalState, movieState } from '../atoms/modalAtom'
 import MuiModal from '@mui/material/Modal'
 import {
   PlusIcon,
-  ThumbUpIcon,
+  CheckIcon,
   VolumeUpIcon,
   VolumeOffIcon,
+  ThumbDownIcon,
+  ThumbUpIcon,
   XIcon,
 } from '@heroicons/react/outline'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Element, Genre } from '../typings/typings'
 import ReactPlayer from 'react-player/lazy'
 import { FaPlay, FaPause } from 'react-icons/fa'
-
+import { TableContext } from '../context/TableContext'
+import { Movie } from '../typings/typings'
 const ModalInfo = () => {
   const [showModal, setShowModal] = useRecoilState(modalState)
   const [movie, setMovie] = useRecoilState(movieState)
@@ -20,12 +23,16 @@ const ModalInfo = () => {
   const [genres, setGenres] = useState<Genre[]>([])
   const [muted, setMuted] = useState(true)
   const [playing, setPlaying] = useState(false)
+  const { addProduct, removeProduct, productList } = useContext(TableContext)
+  const [currentMovie, setCurrentMovie] = useState<Movie | null>(null)
+
+  const [addToList, setAddToList] = useState(false)
+  const [like,setLike]=useState(true);
   const closeModal = () => {
     setShowModal(false)
   }
   useEffect(() => {
     const fetchMovie = async () => {
-      console.log('loading...')
       const data = await fetch(
         `https://api.themoviedb.org/3/${
           movie?.media_type === 'tv' ? 'tv' : 'movie'
@@ -40,17 +47,31 @@ const ModalInfo = () => {
           (element: Element) => element.type === 'Trailer'
         )
         setTrailer(data.videos?.results[findIndex]?.key)
-        console.log(findIndex)
-        console.log('data: ', data)
       }
       if (data?.genres) {
         setGenres(data.genres)
       }
+      setCurrentMovie(data)
     }
+    
     fetchMovie()
-  }, [movie])
-  console.log('genres: ', genres)
-  console.log('trailer: ', trailer)
+  }, [movie]) 
+  useEffect(()=> {
+    if(currentMovie){
+      const foundStarMovie = productList.find(
+        (p) => p.product?.id === currentMovie?.id
+        )
+        const star= foundStarMovie?.starMovie|| false
+        setAddToList(star)
+    }
+    
+    
+  },[currentMovie])
+  if (currentMovie && addToList) {
+    addProduct(currentMovie, addToList)
+  } else if (currentMovie && !addToList) {
+    removeProduct(currentMovie?.id )
+  }
   return (
     <MuiModal
       open={showModal}
@@ -75,7 +96,6 @@ const ModalInfo = () => {
             style={{ position: 'absolute', top: '0', left: '0' }}
             playing={playing}
             muted={muted}
-            volume={1}
           />
           <div className="absolute bottom-10 flex w-full items-center justify-between px-10">
             <div className="flex space-x-2 ">
@@ -92,11 +112,18 @@ const ModalInfo = () => {
                 )}
                 {playing ? 'pause' : 'play'}
               </button>
-              <button className="modalButton">
-                <PlusIcon className="h-7 w-7 " />
+              <button
+                className="modalButton"
+                onClick={()=>setAddToList(!addToList)}
+              >
+                {addToList ? (
+                  <CheckIcon className="h-7 w-7 " />
+                ) : (
+                  <PlusIcon className="h-7 w-7 " />
+                )}
               </button>
-              <button className="modalButton">
-                <ThumbUpIcon className="h-7 w-7 " />
+              <button className="modalButton" onClick={()=>setLike(!like) }>
+                {like? <ThumbUpIcon className="h-7 w-7 " /> : <ThumbDownIcon className="h-7 w-7 "/>}
               </button>
             </div>
             <button className="modalButton" onClick={() => setMuted(!muted)}>
