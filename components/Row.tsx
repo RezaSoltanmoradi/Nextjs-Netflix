@@ -51,9 +51,11 @@ const Row = ({ title, movies }: Props) => {
         md:p-2
         "
         >
-          {movies.map((movie) => (
+          
+          { movies.map((movie) => (
             <Thumbnail key={movie.id} movie={movie} />
           ))}
+          
         </div>
         <HiChevronRight
           onClick={() => handleClick('right')}

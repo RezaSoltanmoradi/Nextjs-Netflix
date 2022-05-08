@@ -29,4 +29,33 @@
     @apply flex h-11 w-11 items-center justify-center rounded-full border-2 border-[gray]
     bg-[#2a2a2a]/60 transition hover:border-white hover:bg-white/10 
   }
+  /* MUI Menu */
+
+  .menu {
+    @apply md:hidden;
+  }
+
+  .menu .MuiPaper-root {
+    @apply !absolute !left-0 !rounded-none !border !border-[gray] !bg-black !text-white;
+  }
+
+  .menu .MuiList-root {
+    @apply !p-0;
+  }
+
+  .menu .MuiMenuItem-root {
+    @apply !block !w-72 !py-3.5 !text-center !text-sm !font-light !text-[#b3b3b3] !transition !duration-200 first:cursor-default first:!font-normal first:!text-white hover:!bg-[#11100F];
+  }
+  
+  .accountMenu .MuiPaper-root {
+    @apply !absolute !right-0 !rounded-none !border !border-[gray] !bg-black !text-white;
+  }
+
+  .accountMenu .MuiList-root {
+    @apply !p-0;
+  }
+
+  .accountMenu .MuiMenuItem-root {
+    @apply !block !w-72 !py-3.5 !text-center !text-sm !font-light !text-[#b3b3b3] !transition !duration-200 first:cursor-default first:!font-normal first:!text-white hover:!bg-[#11100F];
+  }
 }

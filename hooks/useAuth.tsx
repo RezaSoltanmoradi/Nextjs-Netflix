@@ -8,6 +8,7 @@ import {
 import { useRouter } from 'next/router'
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { auth } from '../firebase'
+import { Movie } from '../typings/typings'
 interface IAuth {
   user: User | null
   signUp: (email: string, password: string) => Promise<void>
@@ -85,6 +86,12 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       })
       .catch((error) => alert(error.message))
       .finally(() => setLoading(false))
+    const loadedProducts: { product: Movie; starMovie: boolean }[] = []
+    function updateStorage(key: string, value: any) {
+      const changeToString = JSON.stringify(value)
+      localStorage.setItem(key, changeToString)
+    }
+    updateStorage('products', loadedProducts)
   }
   //-------------------------------------------------
   const memoedValue = useMemo(

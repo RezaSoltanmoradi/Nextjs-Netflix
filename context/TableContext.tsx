@@ -1,25 +1,14 @@
 import React, { createContext, useState } from 'react'
 import { Movie } from '../typings/typings'
+import useAuth from '../hooks/useAuth'
 
-// function getStorage(key:string){
-//   if(typeof window!==undefined&& localStorage===window.localStorage){
-
-//     const getProducts: string |null=localStorage.getItem(key || '')
-//     const changeToObject:Movie[] | null=JSON.parse(getProducts||'')
-//     return changeToObject
-//   }
-
-// }
-// const loadedProducts= getStorage('products')
-// console.log('loadedProducts',loadedProducts);
 type TableTypes = {
-  productList: { product: Movie | null; starMovie: boolean }[]
+  productList: { product: Movie; starMovie: boolean }[]
   addProduct: (product: Movie, starMovie: boolean) => void
   removeProduct: (id: number) => void
 }
-
 export const TableContext = createContext<TableTypes>({
-  productList: [{ product: null, starMovie: false }],
+  productList: [],
   addProduct: (product, starMovie) => {},
   removeProduct: (id) => {},
 })
@@ -27,9 +16,20 @@ interface tableContextProps {
   children: React.ReactNode
 }
 const ProvideTableContext = ({ children }: tableContextProps) => {
+  const { user } = useAuth()
+
+  let loadedProducts: { product: Movie; starMovie: boolean }[] = []
+  if (!user) {
+    loadedProducts = []
+  }
+  if (typeof window !== 'undefined') {
+    const value = localStorage.getItem('products')
+    loadedProducts = JSON.parse(value || '') || []
+    console.log('loadedProducts', loadedProducts)
+  }
   const [products, setProducts] = useState<
-    { product: Movie | null; starMovie: boolean }[]
-  >([])
+    { product: Movie; starMovie: boolean }[]
+  >(loadedProducts || [])
   function updateStorage(key: string, value: any) {
     const changeToString = JSON.stringify(value)
     localStorage.setItem(key, changeToString)
@@ -37,7 +37,7 @@ const ProvideTableContext = ({ children }: tableContextProps) => {
   const addProductHandler = (product: Movie, starMovie: boolean) => {
     const indexProduct = products.find((p) => p.product?.id === product.id)
     if (!indexProduct) {
-      const updatedProducts: { product: Movie | null; starMovie: boolean }[] = [
+      const updatedProducts: { product: Movie; starMovie: boolean }[] = [
         ...products,
         { product, starMovie },
       ]
@@ -50,7 +50,7 @@ const ProvideTableContext = ({ children }: tableContextProps) => {
     if (indexProduct) {
       const filterProduct = products.filter((p) => p.product?.id !== productId)
 
-      const updatedProducts: { product: Movie | null; starMovie: boolean }[] = [
+      const updatedProducts: { product: Movie; starMovie: boolean }[] = [
         ...filterProduct,
       ]
       setProducts(updatedProducts)

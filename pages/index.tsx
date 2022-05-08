@@ -31,27 +31,26 @@ function Home({
   horrorMovies,
   romanceMovies,
 }: Props) {
-  const { loading } = useAuth()
+  const { loading,user} = useAuth()
   const showModal = useRecoilValue(modalState)
-  const { productList } = useContext(TableContext)
-  const [showList, setShowList]=useState(true)
+  const { productList }= useContext(TableContext)
+  const [showList, setShowList] = useState(true)
   if (loading) return null
-
-
   return (
-    <div className={`relative h-screen bg-gradient-to-b  lg:h-[140vh] 
-    ${showModal && '!h-screen overflow-hidden'}`}>
+    <div
+      className={`relative h-screen bg-gradient-to-b  lg:h-[140vh] 
+    ${showModal && '!h-screen overflow-hidden'}`}
+    >
       <Head>
         <title>Home-Netflix</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      
+
       <Header />
       <main className="relative pl-4 pb-24 lg:space-y-24 lg:pl-16 ">
         <Banner netFlixOrginals={netflixOriginals} />
 
         <section className="md:space-y-24">
-          
           {/* My List */}
           <Row title="Trending New " movies={trendingNow} />
           <Row title="Top Rated " movies={topRated} />
@@ -60,14 +59,22 @@ function Home({
           <Row title="Scary Movies  " movies={horrorMovies} />
           <Row title="Documentaries " movies={documentaries} />
           <Row title="Romance Movies " movies={romanceMovies} />
-           {productList.length>0 &&(
-          <>
-            <button  className={`mx-auto w-11/12 rounded bg-[#E50914] py-3 transition text-xl shadow hover:bg-[#f6121d] md:w-[100px] ${
-              'opacity-60'
-            }`} onClick={()=> setShowList(!showList)}>favorite </button>
-          {showList && <Row title="favorite list " movies={productList.map(p=>p.product)} />}
+          {productList.length > 0 && (
+            <>
+              <button
+                className={`mx-auto w-11/12 rounded bg-[#E50914] py-3 text-xl shadow transition hover:bg-[#f6121d] md:w-[150px] ${'opacity-60'}`}
+                onClick={() => setShowList(!showList)}
+              >
+                {showList ? 'hide myList' : 'show myList'}{' '}
+              </button>
+              {showList && (
+                <Row
+                  title="favorite list "
+                  movies={productList.map((p) => p.product)}
+                />
+              )}
             </>
-           ) }
+          )}
         </section>
       </main>
       {/* Modal */}
