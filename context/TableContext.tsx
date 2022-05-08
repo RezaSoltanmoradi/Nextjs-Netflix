@@ -16,20 +16,20 @@ interface tableContextProps {
   children: React.ReactNode
 }
 const ProvideTableContext = ({ children }: tableContextProps) => {
-  const { user } = useAuth()
+  // const { user } = useAuth()
 
-  let loadedProducts: { product: Movie; starMovie: boolean }[] = []
-  if (!user) {
-    loadedProducts = []
-  }
-  if (typeof window !== 'undefined') {
-    const value = localStorage.getItem('products')
-    loadedProducts = JSON.parse(value || '') || []
-    console.log('loadedProducts', loadedProducts)
-  }
+  // let loadedProducts: { product: Movie; starMovie: boolean }[] = []
+  // if (!user) {
+  //   loadedProducts = []
+  // }
+  // if (typeof window !== 'undefined') {
+  //   const value = localStorage.getItem('products')
+  //   loadedProducts = JSON.parse(value || '') || []
+  //   console.log('loadedProducts', loadedProducts)
+  // }
   const [products, setProducts] = useState<
     { product: Movie; starMovie: boolean }[]
-  >(loadedProducts || [])
+  >([])
   function updateStorage(key: string, value: any) {
     const changeToString = JSON.stringify(value)
     localStorage.setItem(key, changeToString)
