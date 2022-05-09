@@ -29,7 +29,7 @@ const ProvideTableContext = ({ children }: tableContextProps) => {
   // }
   const [products, setProducts] = useState<
     { product: Movie; starMovie: boolean }[]
-  >([])
+  >( [])
   function updateStorage(key: string, value: any) {
     const changeToString = JSON.stringify(value)
     localStorage.setItem(key, changeToString)

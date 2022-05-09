@@ -57,12 +57,18 @@ const MyList = () => {
           </li>
         </ul>
 
-        <div className="mt-4 flex flex-col space-y-4">
+        <div className="mt-4 mb-4 flex flex-col space-y-16">
           <Row
             title="favorite list "
             movies={productList.map((p) => p.product)}
           />
           {showModal && <ModalInfo />}
+
+          <Link href="/">
+            <a className="mx-auto mt-10 h-full w-[200px] rounded border-2 bg-red-700  py-4 text-center hover:bg-red-500 ">
+              home
+            </a>
+          </Link>
         </div>
       </main>
     </div>
