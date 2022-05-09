@@ -66,7 +66,7 @@ const MyList = () => {
 
           <Link href="/">
             <a className="mx-auto mt-10 h-full w-[200px] rounded border-2 bg-red-700  py-4 text-center hover:bg-red-500 ">
-              home1
+             go back 
             </a>
           </Link>
         </div>
