@@ -35,6 +35,8 @@ function Home({
   const showModal = useRecoilValue(modalState)
   const { productList }= useContext(TableContext)
   const [showList, setShowList] = useState(true)
+  const allMovies=[netflixOriginals,trendingNow,topRated,actionMovies,
+    comedyMovies,horrorMovies,romanceMovies,documentaries]
   if (loading) return null
   return (
     <div
@@ -46,7 +48,7 @@ function Home({
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Header />
+      <Header allMovies={allMovies}/>
       <main className="relative pl-4 pb-24 lg:space-y-24 lg:pl-16 ">
         <Banner netFlixOrginals={netflixOriginals} />
 
@@ -112,6 +114,7 @@ export const getServerSideProps = async () => {
       horrorMovies: horrorMovies.results,
       romanceMovies: romanceMovies.results,
       documentaries: documentaries.results,
+    
     },
   }
 }
