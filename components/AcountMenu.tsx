@@ -44,7 +44,7 @@ export default function AccountMenu() {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={handleClose}>Account</MenuItem>
+        <MenuItem onClick={handleClose}>Home</MenuItem>
         <MenuItem onClick={handleClose}>
         <Link href='/myList'>Favorite List</Link>
             </MenuItem>
