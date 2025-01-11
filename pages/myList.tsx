@@ -26,7 +26,7 @@ const MyList = () => {
             src="https://rb.gy/ulxxee"
             alt="Netflix"
             width={150}
-            height={90}
+            height={50}
             className="cursor-pointer object-contain"
           />
         </Link>
